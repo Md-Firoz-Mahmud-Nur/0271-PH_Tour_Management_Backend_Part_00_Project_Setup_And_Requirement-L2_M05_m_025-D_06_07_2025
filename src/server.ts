@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { Server } from "http";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
@@ -6,6 +7,7 @@ dotenv.config({ quiet: true });
 
 let server: Server;
 const PORT = 5000;
+// let myAge;
 
 const startServer = async () => {
   try {
