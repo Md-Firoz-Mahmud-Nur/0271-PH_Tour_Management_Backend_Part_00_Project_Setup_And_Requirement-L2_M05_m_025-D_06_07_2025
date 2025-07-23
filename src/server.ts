@@ -4,15 +4,24 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import app from "./app";
 dotenv.config({ quiet: true });
+import { envVariables } from "./app/config/env";
+
+const {
+  MONGO_DB_USER,
+  MONGO_DB_SECRET_KEY,
+  MONGO_DB_URI_SECRET_KEY,
+  PORT,
+  NODE_ENV,
+} = envVariables;
+
+console.log(NODE_ENV);
 
 let server: Server;
-const PORT = 5000;
-// let myAge;
 
 const startServer = async () => {
   try {
     await mongoose.connect(
-      `mongodb+srv://${process.env.MONGO_DB_USER}:${process.env.MONGO_DB_SECRET_KEY}@cluster0.${process.env.MONGO_DB_URI_SECRET_KEY}.mongodb.net/ph-tour-management-backend?retryWrites=true&w=majority&appName=Cluster0`
+      `mongodb+srv://${MONGO_DB_USER}:${MONGO_DB_SECRET_KEY}@cluster0.${MONGO_DB_URI_SECRET_KEY}.mongodb.net/ph-tour-management-backend?retryWrites=true&w=majority&appName=Cluster0`
     );
     console.log("Connected to MongoDB");
 
