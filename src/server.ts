@@ -2,7 +2,7 @@ import { Server } from "http";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import app from "./app";
-dotenv.config();
+dotenv.config({ quiet: true });
 
 let server: Server;
 const PORT = 5000;
@@ -23,3 +23,33 @@ const startServer = async () => {
 };
 
 startServer();
+
+process.on("unhandledRejection", (err) => {
+  console.log("Unhandled Rejection detected... Server shutting down..", err);
+
+  if (server) {
+    server.close(() => {
+      process.exit(1);
+    });
+  }
+
+  process.exit(1);
+});
+
+// Unhandled rejection error
+Promise.reject(new Error("I forgot to catch this promise"));
+
+process.on("uncaughtException", (err) => {
+  console.log("Uncaught Exception detected... Server shutting down..", err);
+
+  if (server) {
+    server.close(() => {
+      process.exit(1);
+    });
+  }
+
+  process.exit(1);
+});
+
+// Uncaught Exception Error
+throw new Error("I forgot to handle this local error");
